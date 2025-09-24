@@ -10,6 +10,12 @@ import {
   Button,
   Stack,
   Alert,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from '@mui/material';
 import {
   AdminPanelSettings as AdminIcon,
@@ -204,56 +210,48 @@ const Configuration = () => {
                 Compare permissions between admin, staff, and customer roles
               </Typography>
 
-              <Box sx={{ overflowX: 'auto' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                  <thead>
-                    <tr>
-                      <th
-                        style={{
-                          textAlign: 'left',
-                          padding: '12px 8px',
-                          borderBottom: '2px solid #ddd',
+              <TableContainer component={Paper} elevation={0}>
+                <Table dense>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell
+                        sx={{
                           fontWeight: 600,
+                          fontSize: '0.875rem',
                         }}
                       >
                         Permission
-                      </th>
-                      <th
-                        style={{
-                          textAlign: 'center',
-                          padding: '12px 8px',
-                          borderBottom: '2px solid #ddd',
+                      </TableCell>
+                      <TableCell
+                        align='center'
+                        sx={{
                           fontWeight: 600,
-                          color: '#d32f2f',
+                          fontSize: '0.875rem',
                         }}
                       >
                         Admin
-                      </th>
-                      <th
-                        style={{
-                          textAlign: 'center',
-                          padding: '12px 8px',
-                          borderBottom: '2px solid #ddd',
+                      </TableCell>
+                      <TableCell
+                        align='center'
+                        sx={{
                           fontWeight: 600,
-                          color: '#ed6c02',
+                          fontSize: '0.875rem',
                         }}
                       >
                         Staff
-                      </th>
-                      <th
-                        style={{
-                          textAlign: 'center',
-                          padding: '12px 8px',
-                          borderBottom: '2px solid #ddd',
+                      </TableCell>
+                      <TableCell
+                        align='center'
+                        sx={{
                           fontWeight: 600,
-                          color: '#1976d2',
+                          fontSize: '0.875rem',
                         }}
                       >
                         Customer
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
                     {Object.keys(permissionLabels).map((key) => {
                       const staffHasPermission = ![
                         'canViewAllReports',
@@ -265,51 +263,31 @@ const Configuration = () => {
                       const customerHasPermission = key === 'canManageOrders';
 
                       return (
-                        <tr key={key}>
-                          <td
-                            style={{
-                              padding: '12px 8px',
-                              borderBottom: '1px solid #eee',
+                        <TableRow key={key} hover>
+                          <TableCell
+                            sx={{
                               fontWeight: 500,
                             }}
                           >
                             {permissionLabels[key]}
-                          </td>
-                          <td
-                            style={{
-                              textAlign: 'center',
-                              padding: '12px 8px',
-                              borderBottom: '1px solid #eee',
-                            }}
-                          >
+                          </TableCell>
+                          <TableCell align='center'>
                             <Chip
                               label='✓'
                               color='success'
                               size='small'
                               variant='filled'
                             />
-                          </td>
-                          <td
-                            style={{
-                              textAlign: 'center',
-                              padding: '12px 8px',
-                              borderBottom: '1px solid #eee',
-                            }}
-                          >
+                          </TableCell>
+                          <TableCell align='center'>
                             <Chip
                               label={staffHasPermission ? '✓' : '✗'}
                               color={staffHasPermission ? 'success' : 'error'}
                               size='small'
                               variant='filled'
                             />
-                          </td>
-                          <td
-                            style={{
-                              textAlign: 'center',
-                              padding: '12px 8px',
-                              borderBottom: '1px solid #eee',
-                            }}
-                          >
+                          </TableCell>
+                          <TableCell align='center'>
                             <Chip
                               label={customerHasPermission ? '✓' : '✗'}
                               color={
@@ -318,13 +296,13 @@ const Configuration = () => {
                               size='small'
                               variant='filled'
                             />
-                          </td>
-                        </tr>
+                          </TableCell>
+                        </TableRow>
                       );
                     })}
-                  </tbody>
-                </table>
-              </Box>
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </CardContent>
           </Card>
         </Grid>

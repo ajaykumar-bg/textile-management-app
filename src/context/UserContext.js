@@ -16,16 +16,41 @@ export const UserProvider = ({ children }) => {
     id: '1',
     name: 'Ajay Girija',
     email: 'ajay.girija@company.com',
-    role: 'admin', // 'admin' or 'user'
+    role: 'admin', // 'admin', 'staff', or 'customer'
   });
 
   // Define permissions based on role
   const permissions = {
-    admin: {},
-    user: {},
+    admin: {
+      canViewAllReports: true,
+      canManageUsers: true,
+      canManageInventory: true,
+      canViewAnalytics: true,
+      canManageOrders: true,
+      canAccessConfiguration: true,
+      canViewFinancials: true,
+    },
+    staff: {
+      canViewAllReports: false,
+      canManageUsers: false,
+      canManageInventory: true,
+      canViewAnalytics: true,
+      canManageOrders: true,
+      canAccessConfiguration: false,
+      canViewFinancials: false,
+    },
+    customer: {
+      canViewAllReports: false,
+      canManageUsers: false,
+      canManageInventory: false,
+      canViewAnalytics: false,
+      canManageOrders: true, // Customers can manage their own orders
+      canAccessConfiguration: false,
+      canViewFinancials: false,
+    },
   };
 
-  const userPermissions = permissions[user.role] || permissions.user;
+  const userPermissions = permissions[user.role] || permissions.customer;
 
   const switchRole = (newRole) => {
     setUser((prev) => ({ ...prev, role: newRole }));

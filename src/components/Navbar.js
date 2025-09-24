@@ -17,7 +17,9 @@ import {
   Menu as MenuIcon,
   Logout,
   AccountCircle,
-  Person,
+  AdminPanelSettings,
+  Support,
+  StorefrontOutlined,
 } from '@mui/icons-material';
 import { useState } from 'react';
 import { useUser } from '../context/UserContext';
@@ -122,7 +124,7 @@ const Navbar = () => {
                     {user.name}
                   </Typography>
                   <Typography variant='caption' sx={{ opacity: 0.8 }}>
-                    {user.role}
+                    {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
                   </Typography>
                 </Box>
               </Button>
@@ -156,18 +158,27 @@ const Navbar = () => {
                 disabled={user.role === 'admin'}
               >
                 <ListItemIcon>
-                  <Person fontSize='small' />
+                  <AdminPanelSettings fontSize='small' />
                 </ListItemIcon>
                 <ListItemText>Switch to Admin</ListItemText>
               </MenuItem>
               <MenuItem
-                onClick={() => handleRoleChange('user')}
-                disabled={user.role === 'user'}
+                onClick={() => handleRoleChange('staff')}
+                disabled={user.role === 'staff'}
               >
                 <ListItemIcon>
-                  <Person fontSize='small' />
+                  <Support fontSize='small' />
                 </ListItemIcon>
-                <ListItemText>Switch to User</ListItemText>
+                <ListItemText>Switch to Staff</ListItemText>
+              </MenuItem>
+              <MenuItem
+                onClick={() => handleRoleChange('customer')}
+                disabled={user.role === 'customer'}
+              >
+                <ListItemIcon>
+                  <StorefrontOutlined fontSize='small' />
+                </ListItemIcon>
+                <ListItemText>Switch to Customer</ListItemText>
               </MenuItem>
 
               <Divider />

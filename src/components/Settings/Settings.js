@@ -9,7 +9,6 @@ import {
   FormControlLabel,
   Radio,
   Divider,
-  Container,
   Card,
   CardContent,
   Grid,
@@ -46,7 +45,7 @@ const Settings = () => {
   ];
 
   return (
-    <Container sx={{ py: 4 }}>
+    <Box sx={{ p: 3 }}>
       <Typography variant='h2' gutterBottom>
         Settings
       </Typography>
@@ -79,7 +78,7 @@ const Settings = () => {
           >
             <Grid container spacing={2}>
               {themeOptions.map((option) => (
-                <Grid item xs={12} sm={6} md={4} key={option.value}>
+                <Grid size={{ xs: 12, sm: 6, md: 4 }} key={option.value}>
                   <Card
                     variant='outlined'
                     sx={{
@@ -186,7 +185,7 @@ const Settings = () => {
           </Box>
         </Box>
       </Paper>
-    </Container>
+    </Box>
   );
 };
 

@@ -18,18 +18,12 @@ import {
   Logout,
   AccountCircle,
   Person,
-  DarkMode,
-  LightMode,
-  PlayArrow,
-  Pause,
 } from '@mui/icons-material';
 import { useState } from 'react';
-import { useThemeMode } from '../context/ThemeContext';
 import { useUser } from '../context/UserContext';
 import Sidebar from './Sidebar';
 
 const Navbar = () => {
-  const { mode, toggleTheme } = useThemeMode();
   const { user, switchRole } = useUser();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [userMenuAnchorEl, setUserMenuAnchorEl] = useState(null);
@@ -58,11 +52,6 @@ const Navbar = () => {
 
   const handleRoleChange = (role) => {
     switchRole(role);
-    handleUserMenuClose();
-  };
-
-  const handleThemeToggle = () => {
-    toggleTheme();
     handleUserMenuClose();
   };
 
@@ -179,22 +168,6 @@ const Navbar = () => {
                   <Person fontSize='small' />
                 </ListItemIcon>
                 <ListItemText>Switch to User</ListItemText>
-              </MenuItem>
-
-              <Divider />
-
-              {/* Theme Toggle */}
-              <MenuItem onClick={handleThemeToggle}>
-                <ListItemIcon>
-                  {mode === 'dark' ? (
-                    <LightMode fontSize='small' />
-                  ) : (
-                    <DarkMode fontSize='small' />
-                  )}
-                </ListItemIcon>
-                <ListItemText>
-                  {mode === 'dark' ? 'Light Mode' : 'Dark Mode'}
-                </ListItemText>
               </MenuItem>
 
               <Divider />

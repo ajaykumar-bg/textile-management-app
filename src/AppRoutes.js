@@ -11,6 +11,7 @@ import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
 import Configuration from './components/Configuration';
+import Settings from './components/Settings';
 
 function AppRoutes() {
   return (
@@ -27,6 +28,7 @@ function AppRoutes() {
                   <Routes>
                     <Route path='/' element={<Dashboard />} />
                     <Route path='/configuration' element={<Configuration />} />
+                    <Route path='/settings' element={<Settings />} />
                     <Route path='*' element={<Navigate to='/' replace />} />
                   </Routes>
                 </Container>

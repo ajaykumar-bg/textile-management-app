@@ -12,10 +12,8 @@ import {
 } from '@mui/material';
 import {
   Dashboard as DashboardIcon,
-  Details as DetailsIcon,
-  Analytics as AnalyticsIcon,
-  Assignment as AssignmentIcon,
   Settings as SettingsIcon,
+  Tune as TuneIcon,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
@@ -34,9 +32,16 @@ const Sidebar = ({ open, onClose }) => {
     navigationItems.push({
       label: 'Configuration',
       path: '/configuration',
-      icon: <SettingsIcon />,
+      icon: <TuneIcon />,
     });
   }
+
+  // Add Settings for all users
+  navigationItems.push({
+    label: 'Settings',
+    path: '/settings',
+    icon: <SettingsIcon />,
+  });
 
   const handleNavigation = (path) => {
     navigate(path);

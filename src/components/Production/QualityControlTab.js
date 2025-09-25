@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Box,
   Typography,
@@ -11,10 +11,54 @@ import {
   TableRow,
   Chip,
   Grid,
+  TableSortLabel,
 } from '@mui/material';
 import { productionData } from './constants';
 
 const QualityControlTab = ({ formatDate }) => {
+  const [orderBy, setOrderBy] = useState('date');
+  const [order, setOrder] = useState('desc'); // Default to desc to show newest first
+
+  const handleRequestSort = (property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const sortedInspections = useMemo(() => {
+    return [...productionData.qualityMetrics.inspectionResults].sort((a, b) => {
+      let aValue = a[orderBy];
+      let bValue = b[orderBy];
+
+      // Handle numeric values
+      if (orderBy === 'defects') {
+        aValue = Number(aValue) || 0;
+        bValue = Number(bValue) || 0;
+      }
+
+      // Handle date values
+      if (orderBy === 'date') {
+        aValue = new Date(aValue);
+        bValue = new Date(bValue);
+      }
+
+      // Handle string values
+      if (typeof aValue === 'string' && orderBy !== 'date') {
+        aValue = aValue.toLowerCase();
+        bValue = bValue.toLowerCase();
+      }
+
+      if (order === 'asc') {
+        return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+      } else {
+        return aValue > bValue ? -1 : aValue < bValue ? 1 : 0;
+      }
+    });
+  }, [orderBy, order]);
+
+  const createSortHandler = (property) => () => {
+    handleRequestSort(property);
+  };
   return (
     <Grid container spacing={3}>
       <Grid size={{ xs: 12, md: 6 }}>
@@ -59,29 +103,59 @@ const QualityControlTab = ({ formatDate }) => {
             <Table size='small'>
               <TableHead>
                 <TableRow>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Batch</TableCell>
-                  <TableCell>Result</TableCell>
-                  <TableCell>Defects</TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={orderBy === 'date'}
+                      direction={orderBy === 'date' ? order : 'asc'}
+                      onClick={createSortHandler('date')}
+                    >
+                      Date
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={orderBy === 'batch'}
+                      direction={orderBy === 'batch' ? order : 'asc'}
+                      onClick={createSortHandler('batch')}
+                    >
+                      Batch
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={orderBy === 'result'}
+                      direction={orderBy === 'result' ? order : 'asc'}
+                      onClick={createSortHandler('result')}
+                    >
+                      Result
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={orderBy === 'defects'}
+                      direction={orderBy === 'defects' ? order : 'asc'}
+                      onClick={createSortHandler('defects')}
+                    >
+                      Defects
+                    </TableSortLabel>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {productionData.qualityMetrics.inspectionResults.map(
-                  (result, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{formatDate(result.date)}</TableCell>
-                      <TableCell>{result.batch}</TableCell>
-                      <TableCell>
-                        <Chip
-                          label={result.result}
-                          color={result.result === 'Pass' ? 'success' : 'error'}
-                          size='small'
-                        />
-                      </TableCell>
-                      <TableCell>{result.defects}</TableCell>
-                    </TableRow>
-                  )
-                )}
+                {sortedInspections.map((result, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{formatDate(result.date)}</TableCell>
+                    <TableCell>{result.batch}</TableCell>
+                    <TableCell>
+                      <Chip
+                        label={result.result}
+                        color={result.result === 'Pass' ? 'success' : 'error'}
+                        size='small'
+                      />
+                    </TableCell>
+                    <TableCell>{result.defects}</TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </CardContent>

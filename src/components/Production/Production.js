@@ -239,7 +239,7 @@ const Production = () => {
       {/* Quality Control Tab */}
       <TabPanel value={tabValue} index={2}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Card elevation={2}>
               <CardContent>
                 <Typography variant='h6' gutterBottom>
@@ -272,7 +272,7 @@ const Production = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Card elevation={2}>
               <CardContent>
                 <Typography variant='h6' gutterBottom>
@@ -317,7 +317,7 @@ const Production = () => {
       {/* Performance Tab */}
       <TabPanel value={tabValue} index={3}>
         <Grid container spacing={3}>
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <Card elevation={2}>
               <CardContent>
                 <Typography variant='h6' gutterBottom>

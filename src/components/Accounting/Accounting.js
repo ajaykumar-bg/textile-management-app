@@ -114,7 +114,7 @@ const Accounting = () => {
       <TabPanel value={tabValue} index={0}>
         <Grid container spacing={3}>
           {/* Key Financial Metrics */}
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <StatCard
               title='Total Assets'
               value={formatCurrency(
@@ -124,7 +124,7 @@ const Accounting = () => {
               color='success.main'
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <StatCard
               title='Net Income'
               value={formatCurrency(accountingData.financialSummary.netIncome)}
@@ -132,7 +132,7 @@ const Accounting = () => {
               color='primary.main'
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <StatCard
               title='Current Ratio'
               value={accountingData.financialSummary.currentRatio}
@@ -140,7 +140,7 @@ const Accounting = () => {
               color='info.main'
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <StatCard
               title='Gross Profit Margin'
               value={`${accountingData.financialSummary.grossProfitMargin}%`}
@@ -150,7 +150,7 @@ const Accounting = () => {
           </Grid>
 
           {/* Monthly Performance Chart */}
-          <Grid item xs={12} md={8}>
+          <Grid size={{ xs: 12, md: 8 }}>
             <Card elevation={2}>
               <CardContent>
                 <Typography variant='h6' gutterBottom>
@@ -196,7 +196,7 @@ const Accounting = () => {
           </Grid>
 
           {/* Expense Breakdown */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Card elevation={2}>
               <CardContent>
                 <Typography variant='h6' gutterBottom>
@@ -479,7 +479,7 @@ const Accounting = () => {
       <TabPanel value={tabValue} index={5}>
         <Grid container spacing={3}>
           {/* Budget vs Actual */}
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <Card elevation={2}>
               <CardContent>
                 <Typography variant='h6' gutterBottom>

@@ -126,7 +126,7 @@ const Design = () => {
         <Card elevation={1} sx={{ mb: 3 }}>
           <CardContent>
             <Grid container spacing={2} alignItems='center'>
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                 <TextField
                   fullWidth
                   placeholder='Search designs, designers, or IDs...'
@@ -139,7 +139,7 @@ const Design = () => {
                   }}
                 />
               </Grid>
-              <Grid item xs={12} sm={3} md={2}>
+              <Grid size={{ xs: 12, sm: 3, md: 2 }}>
                 <FormControl fullWidth>
                   <InputLabel>Category</InputLabel>
                   <Select
@@ -155,7 +155,7 @@ const Design = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={3} md={2}>
+              <Grid size={{ xs: 12, sm: 3, md: 2 }}>
                 <FormControl fullWidth>
                   <InputLabel>Status</InputLabel>
                   <Select
@@ -171,7 +171,7 @@ const Design = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={12} md={4}>
+              <Grid size={{ xs: 12, sm: 12, md: 4 }}>
                 <Typography variant='body2' color='text.secondary'>
                   Showing {filteredDesigns.length} of{' '}
                   {designData.designs.length} designs
@@ -184,7 +184,7 @@ const Design = () => {
         {/* Design Cards */}
         <Grid container spacing={3}>
           {filteredDesigns.map((design) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={design.id}>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} lg={3} key={design.id}>
               <DesignCard
                 design={design}
                 onView={(design) => console.log('View:', design)}
@@ -265,7 +265,7 @@ const Design = () => {
       <TabPanel value={tabValue} index={3}>
         <Grid container spacing={3}>
           {designData.collections.map((collection) => (
-            <Grid item xs={12} md={6} key={collection.id}>
+            <Grid size={{ xs: 12, md: 6 }} key={collection.id}>
               <Card elevation={2}>
                 <CardContent>
                   <Box
@@ -329,7 +329,7 @@ const Design = () => {
         <DialogContent>
           <Grid container spacing={3}>
             {designData.colorPalettes.map((palette) => (
-              <Grid item xs={12} md={6} key={palette.id}>
+              <Grid size={{ xs: 12, md: 6 }} key={palette.id}>
                 <Card variant='outlined'>
                   <CardContent>
                     <Typography variant='h6' gutterBottom>

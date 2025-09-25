@@ -84,7 +84,7 @@ const InventoryCard = ({
         </Box>
 
         <Grid container spacing={2} mb={2}>
-          <Grid item xs={6}>
+          <Grid size={{ xs: 6 }}>
             <Typography variant='body2' color='text.secondary'>
               Category
             </Typography>
@@ -92,7 +92,7 @@ const InventoryCard = ({
               {item.category}
             </Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid size={{ xs: 6 }}>
             <Typography variant='body2' color='text.secondary'>
               Location
             </Typography>

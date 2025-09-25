@@ -25,7 +25,7 @@ const DesignOverview = () => {
   return (
     <Grid container spacing={3}>
       {/* Key Metrics */}
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid size={{ xs: 12, sm: 6, md: 3 }}>
         <StatCard
           title='Total Designs'
           value={stats.totalDesigns}
@@ -33,7 +33,7 @@ const DesignOverview = () => {
           color='primary.main'
         />
       </Grid>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid size={{ xs: 12, sm: 6, md: 3 }}>
         <StatCard
           title='Active Designs'
           value={stats.activeDesigns}
@@ -41,7 +41,7 @@ const DesignOverview = () => {
           color='success.main'
         />
       </Grid>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid size={{ xs: 12, sm: 6, md: 3 }}>
         <StatCard
           title='Approved This Month'
           value={stats.approvedThisMonth}
@@ -49,7 +49,7 @@ const DesignOverview = () => {
           color='info.main'
         />
       </Grid>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid size={{ xs: 12, sm: 6, md: 3 }}>
         <StatCard
           title='In Development'
           value={stats.inDevelopment}
@@ -59,7 +59,7 @@ const DesignOverview = () => {
       </Grid>
 
       {/* Design Categories Distribution */}
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <Card elevation={2}>
           <CardContent>
             <Typography variant='h6' gutterBottom>
@@ -84,7 +84,7 @@ const DesignOverview = () => {
       </Grid>
 
       {/* Popular Colors */}
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <Card elevation={2}>
           <CardContent>
             <Typography variant='h6' gutterBottom>
@@ -112,7 +112,7 @@ const DesignOverview = () => {
       </Grid>
 
       {/* Design Process Timeline */}
-      <Grid item xs={12}>
+      <Grid size={{ xs: 12 }}>
         <Card elevation={2}>
           <CardContent>
             <Typography variant='h6' gutterBottom>
@@ -120,7 +120,7 @@ const DesignOverview = () => {
             </Typography>
             <Grid container spacing={2} sx={{ mt: 1 }}>
               {processSteps.map((step, index) => (
-                <Grid item xs={12} sm={6} md={2} key={index}>
+                <Grid size={{ xs: 12, sm: 6, md: 2 }} key={index}>
                   <Box
                     sx={{
                       p: 2,

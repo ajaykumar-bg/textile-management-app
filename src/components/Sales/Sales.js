@@ -550,7 +550,7 @@ const Sales = () => {
         <DialogContent>
           {selectedOrder && (
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography variant='subtitle2'>
                   Customer Information
                 </Typography>
@@ -564,7 +564,7 @@ const Sales = () => {
                   {selectedOrder.customerEmail}
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography variant='subtitle2'>Order Information</Typography>
                 <Typography variant='body2'>
                   Order Date: {formatDate(selectedOrder.orderDate)}
@@ -576,7 +576,7 @@ const Sales = () => {
                   Status: {selectedOrder.status}
                 </Typography>
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <Typography variant='subtitle2' sx={{ mt: 2, mb: 1 }}>
                   Order Items
                 </Typography>

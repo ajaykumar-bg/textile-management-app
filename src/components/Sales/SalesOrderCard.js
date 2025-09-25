@@ -99,7 +99,7 @@ const SalesOrderCard = ({
         </Box>
 
         <Grid container spacing={2} mb={2}>
-          <Grid item xs={6}>
+          <Grid size={{ xs: 6 }}>
             <Box display='flex' flexDirection='column'>
               <Typography variant='body2' color='text.secondary'>
                 Status
@@ -112,7 +112,7 @@ const SalesOrderCard = ({
               />
             </Box>
           </Grid>
-          <Grid item xs={6}>
+          <Grid size={{ xs: 6 }}>
             <Box display='flex' flexDirection='column'>
               <Typography variant='body2' color='text.secondary'>
                 Priority

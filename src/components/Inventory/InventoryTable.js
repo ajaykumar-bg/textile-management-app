@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Table,
   TableBody,
@@ -11,6 +11,7 @@ import {
   Typography,
   Box,
   Button,
+  TableSortLabel,
 } from '@mui/material';
 import { statusColors } from './constants';
 
@@ -20,24 +21,129 @@ const InventoryTable = ({
   onEditItem,
   permissions,
 }) => {
+  const [orderBy, setOrderBy] = useState('id');
+  const [order, setOrder] = useState('asc');
+
+  const handleRequestSort = (property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const sortedItems = useMemo(() => {
+    return [...filteredItems].sort((a, b) => {
+      let aValue = a[orderBy];
+      let bValue = b[orderBy];
+
+      // Handle numeric values
+      if (
+        orderBy === 'currentStock' ||
+        orderBy === 'unitPrice' ||
+        orderBy === 'totalValue'
+      ) {
+        aValue = Number(aValue) || 0;
+        bValue = Number(bValue) || 0;
+      }
+
+      // Handle string values
+      if (typeof aValue === 'string') {
+        aValue = aValue.toLowerCase();
+        bValue = bValue.toLowerCase();
+      }
+
+      if (order === 'asc') {
+        return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+      } else {
+        return aValue > bValue ? -1 : aValue < bValue ? 1 : 0;
+      }
+    });
+  }, [filteredItems, orderBy, order]);
+
+  const createSortHandler = (property) => () => {
+    handleRequestSort(property);
+  };
   return (
     <TableContainer component={Paper} elevation={2}>
       <Table size='small'>
         <TableHead>
           <TableRow>
-            <TableCell>Item Code</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Category</TableCell>
-            <TableCell>Current Stock</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Unit Price</TableCell>
-            <TableCell>Total Value</TableCell>
-            <TableCell>Location</TableCell>
+            <TableCell>
+              <TableSortLabel
+                active={orderBy === 'id'}
+                direction={orderBy === 'id' ? order : 'asc'}
+                onClick={createSortHandler('id')}
+              >
+                Item Code
+              </TableSortLabel>
+            </TableCell>
+            <TableCell>
+              <TableSortLabel
+                active={orderBy === 'name'}
+                direction={orderBy === 'name' ? order : 'asc'}
+                onClick={createSortHandler('name')}
+              >
+                Name
+              </TableSortLabel>
+            </TableCell>
+            <TableCell>
+              <TableSortLabel
+                active={orderBy === 'category'}
+                direction={orderBy === 'category' ? order : 'asc'}
+                onClick={createSortHandler('category')}
+              >
+                Category
+              </TableSortLabel>
+            </TableCell>
+            <TableCell>
+              <TableSortLabel
+                active={orderBy === 'currentStock'}
+                direction={orderBy === 'currentStock' ? order : 'asc'}
+                onClick={createSortHandler('currentStock')}
+              >
+                Current Stock
+              </TableSortLabel>
+            </TableCell>
+            <TableCell>
+              <TableSortLabel
+                active={orderBy === 'status'}
+                direction={orderBy === 'status' ? order : 'asc'}
+                onClick={createSortHandler('status')}
+              >
+                Status
+              </TableSortLabel>
+            </TableCell>
+            <TableCell>
+              <TableSortLabel
+                active={orderBy === 'unitPrice'}
+                direction={orderBy === 'unitPrice' ? order : 'asc'}
+                onClick={createSortHandler('unitPrice')}
+              >
+                Unit Price
+              </TableSortLabel>
+            </TableCell>
+            <TableCell>
+              <TableSortLabel
+                active={orderBy === 'totalValue'}
+                direction={orderBy === 'totalValue' ? order : 'asc'}
+                onClick={createSortHandler('totalValue')}
+              >
+                Total Value
+              </TableSortLabel>
+            </TableCell>
+            <TableCell>
+              <TableSortLabel
+                active={orderBy === 'location'}
+                direction={orderBy === 'location' ? order : 'asc'}
+                onClick={createSortHandler('location')}
+              >
+                Location
+              </TableSortLabel>
+            </TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredItems.map((item) => (
+          {sortedItems.map((item) => (
             <TableRow key={item.id} hover>
               <TableCell>
                 <Typography variant='body2' fontWeight='medium'>

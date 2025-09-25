@@ -14,7 +14,7 @@ import {
   Chip,
 } from '@mui/material';
 import { permissionLabels, adminOnlyPermissions } from './role.constants';
-import RoleAccessLimitInfo from './RoleAccessLimitInfo';
+import RoleComparisonInfo from './RoleComparisonInfo';
 
 const RoleComparison = () => {
   const getPermissionForRole = (key, role) => {
@@ -62,10 +62,10 @@ const RoleComparison = () => {
           roles
         </Typography>
 
-        <RoleAccessLimitInfo />
+        <RoleComparisonInfo />
 
         <TableContainer component={Paper} elevation={0}>
-          <Table dense>
+          <Table size='small'>
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontWeight: 600, fontSize: '0.875rem' }}>

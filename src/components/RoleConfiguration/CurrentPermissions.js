@@ -29,7 +29,7 @@ const CurrentPermissions = () => {
               <Paper
                 elevation={1}
                 sx={{
-                  p: 2,
+                  p: 1,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',

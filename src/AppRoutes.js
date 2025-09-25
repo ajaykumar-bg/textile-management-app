@@ -9,15 +9,15 @@ import {
 
 import Login from './components/Login';
 import Navbar from './components/Navbar';
-import Dashboard from './components/Dashboard';
-import RoleConfiguration from './components/RoleConfiguration';
-import Settings from './components/Settings';
-import Inventory from './components/Inventory';
-import Sales from './components/Sales';
-import Purchase from './components/Purchase';
-import Production from './components/Production';
-import Design from './components/Design';
-import Accounting from './components/Accounting';
+import Dashboard from './features/Dashboard';
+import RoleConfiguration from './features/RoleConfiguration';
+import Settings from './features/Settings';
+import Inventory from './features/Inventory';
+import Sales from './features/Sales';
+import Purchase from './features/Purchase';
+import Production from './features/Production';
+import Design from './features/Design';
+import Accounting from './features/Accounting';
 
 function AppRoutes() {
   return (

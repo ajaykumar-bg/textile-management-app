@@ -28,12 +28,17 @@ const RoleConfiguration = () => {
   const { user, permissions, switchRole } = useUser();
 
   const permissionLabels = {
-    canViewAllReports: 'View All Reports',
-    canManageUsers: 'Manage Users',
+    canViewDashboard: 'View Dashboard',
     canManageInventory: 'Manage Inventory',
-    canViewAnalytics: 'View Analytics',
-    canManageOrders: 'Manage Orders',
+    canManageSales: 'Manage Sales',
+    canManagePurchase: 'Manage Purchase',
+    canManageProduction: 'Manage Production',
+    canManageDesign: 'Manage Design',
+    canManageAccounting: 'Manage Accounting',
     canAccessRoleConfiguration: 'Access Role Configuration',
+    canManageUsers: 'Manage Users',
+    canViewAllReports: 'View All Reports',
+    canViewAnalytics: 'View Analytics',
     canViewFinancials: 'View Financials',
   };
 
@@ -108,9 +113,13 @@ const RoleConfiguration = () => {
                 Role Management
               </Typography>
               <Typography variant='body2' color='text.secondary' sx={{ mb: 2 }}>
-                Switch between roles to test different permission levels - Admin
-                (full access), Staff (operational access), Customer (order
-                management)
+                Switch between roles to test different permission levels:
+                <br />• <strong>Admin:</strong> Full access to all modules
+                including financial management
+                <br />• <strong>Staff:</strong> Operational access to inventory,
+                sales, purchase, production, and design
+                <br />• <strong>Customer:</strong> Can view products and manage
+                their own orders
               </Typography>
 
               <Stack direction='row' spacing={2} flexWrap='wrap'>
@@ -161,7 +170,7 @@ const RoleConfiguration = () => {
                 Current Permissions ({user.role.toUpperCase()})
               </Typography>
               <Typography variant='body2' color='text.secondary' sx={{ mb: 2 }}>
-                Dashboard sections visible to the current role
+                Business module permissions for the current role
               </Typography>
 
               <Grid container spacing={2}>
@@ -207,8 +216,16 @@ const RoleConfiguration = () => {
                 Role Comparison
               </Typography>
               <Typography variant='body2' color='text.secondary' sx={{ mb: 2 }}>
-                Compare permissions between admin, staff, and customer roles
+                Compare module access permissions between admin, staff, and
+                customer roles
               </Typography>
+
+              <Box sx={{ mb: 2, p: 2, bgcolor: 'grey.50', borderRadius: 1 }}>
+                <Typography variant='caption' color='text.secondary'>
+                  <strong>Legend:</strong> ✓ = Full Access • ◐ = View Only • ✗ =
+                  No Access
+                </Typography>
+              </Box>
 
               <TableContainer component={Paper} elevation={0}>
                 <Table dense>
@@ -253,14 +270,17 @@ const RoleConfiguration = () => {
                   </TableHead>
                   <TableBody>
                     {Object.keys(permissionLabels).map((key) => {
+                      // Staff permissions: can access business modules but not admin-only features
                       const staffHasPermission = ![
-                        'canViewAllReports',
-                        'canManageUsers',
+                        'canManageAccounting',
                         'canAccessRoleConfiguration',
+                        'canManageUsers',
+                        'canViewAllReports',
                         'canViewFinancials',
                       ].includes(key);
 
-                      const customerHasPermission = key === 'canManageOrders';
+                      // Customer permissions: only dashboard access and order management (limited)
+                      const customerHasPermission = key === 'canViewDashboard';
 
                       return (
                         <TableRow key={key} hover>
@@ -289,9 +309,16 @@ const RoleConfiguration = () => {
                           </TableCell>
                           <TableCell align='center'>
                             <Chip
-                              label={customerHasPermission ? '✓' : '✗'}
+                              label={customerHasPermission ? '✓' : '◐'}
                               color={
-                                customerHasPermission ? 'success' : 'error'
+                                customerHasPermission
+                                  ? 'success'
+                                  : [
+                                      'canManageInventory',
+                                      'canManageSales',
+                                    ].includes(key)
+                                  ? 'warning'
+                                  : 'error'
                               }
                               size='small'
                               variant='filled'
@@ -303,6 +330,106 @@ const RoleConfiguration = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Role Details */}
+        <Grid size={{ xs: 12 }}>
+          <Card>
+            <CardContent>
+              <Typography variant='h6' gutterBottom>
+                Role Access Details
+              </Typography>
+              <Grid container spacing={3}>
+                <Grid size={{ xs: 12, md: 4 }}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      bgcolor: 'error.lighter',
+                      borderLeft: '4px solid',
+                      borderColor: 'error.main',
+                    }}
+                  >
+                    <Typography
+                      variant='subtitle1'
+                      fontWeight='bold'
+                      color='error.dark'
+                      gutterBottom
+                    >
+                      Admin Access
+                    </Typography>
+                    <Typography variant='body2' color='text.secondary'>
+                      • Full system access
+                      <br />
+                      • All business modules
+                      <br />
+                      • Financial management
+                      <br />
+                      • User & role management
+                      <br />• System configuration
+                    </Typography>
+                  </Paper>
+                </Grid>
+                <Grid size={{ xs: 12, md: 4 }}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      bgcolor: 'warning.lighter',
+                      borderLeft: '4px solid',
+                      borderColor: 'warning.main',
+                    }}
+                  >
+                    <Typography
+                      variant='subtitle1'
+                      fontWeight='bold'
+                      color='warning.dark'
+                      gutterBottom
+                    >
+                      Staff Access
+                    </Typography>
+                    <Typography variant='body2' color='text.secondary'>
+                      • Operational modules
+                      <br />
+                      • Inventory management
+                      <br />
+                      • Sales & purchase
+                      <br />
+                      • Production & design
+                      <br />• Analytics (limited)
+                    </Typography>
+                  </Paper>
+                </Grid>
+                <Grid size={{ xs: 12, md: 4 }}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      bgcolor: 'primary.lighter',
+                      borderLeft: '4px solid',
+                      borderColor: 'primary.main',
+                    }}
+                  >
+                    <Typography
+                      variant='subtitle1'
+                      fontWeight='bold'
+                      color='primary.dark'
+                      gutterBottom
+                    >
+                      Customer Access
+                    </Typography>
+                    <Typography variant='body2' color='text.secondary'>
+                      • View products (inventory)
+                      <br />
+                      • Manage own orders
+                      <br />
+                      • Order history
+                      <br />
+                      • Basic dashboard
+                      <br />• Limited to self-service
+                    </Typography>
+                  </Paper>
+                </Grid>
+              </Grid>
             </CardContent>
           </Card>
         </Grid>

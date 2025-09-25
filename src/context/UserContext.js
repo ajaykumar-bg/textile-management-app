@@ -27,7 +27,7 @@ export const UserProvider = ({ children }) => {
       canManageInventory: true,
       canViewAnalytics: true,
       canManageOrders: true,
-      canAccessConfiguration: true,
+      canAccessRoleConfiguration: true,
       canViewFinancials: true,
     },
     staff: {
@@ -36,7 +36,7 @@ export const UserProvider = ({ children }) => {
       canManageInventory: true,
       canViewAnalytics: true,
       canManageOrders: true,
-      canAccessConfiguration: false,
+      canAccessRoleConfiguration: false,
       canViewFinancials: false,
     },
     customer: {
@@ -45,7 +45,7 @@ export const UserProvider = ({ children }) => {
       canManageInventory: false,
       canViewAnalytics: false,
       canManageOrders: true, // Customers can manage their own orders
-      canAccessConfiguration: false,
+      canAccessRoleConfiguration: false,
       canViewFinancials: false,
     },
   };

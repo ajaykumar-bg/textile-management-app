@@ -56,7 +56,11 @@ const Sidebar = ({ open, onClose }) => {
   if (user.role === 'admin') {
     navigationItems.push(
       { label: 'Accounting', path: '/accounting', icon: <AccountingIcon /> },
-      { label: 'Configuration', path: '/configuration', icon: <TuneIcon /> }
+      {
+        label: 'Role Configuration',
+        path: '/role-configuration',
+        icon: <TuneIcon />,
+      }
     );
   }
 

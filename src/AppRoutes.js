@@ -10,7 +10,7 @@ import {
 import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
-import Configuration from './components/Configuration';
+import RoleConfiguration from './components/RoleConfiguration';
 import Settings from './components/Settings';
 import Inventory from './components/Inventory';
 import Sales from './components/Sales';
@@ -39,7 +39,10 @@ function AppRoutes() {
                     <Route path='/production' element={<Production />} />
                     <Route path='/design' element={<Design />} />
                     <Route path='/accounting' element={<Accounting />} />
-                    <Route path='/configuration' element={<Configuration />} />
+                    <Route
+                      path='/role-configuration'
+                      element={<RoleConfiguration />}
+                    />
                     <Route path='/settings' element={<Settings />} />
                     <Route path='*' element={<Navigate to='/' replace />} />
                   </Routes>

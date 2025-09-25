@@ -24,7 +24,7 @@ import {
 } from '@mui/icons-material';
 import { useUser } from '../../context/UserContext';
 
-const Configuration = () => {
+const RoleConfiguration = () => {
   const { user, permissions, switchRole } = useUser();
 
   const permissionLabels = {
@@ -33,7 +33,7 @@ const Configuration = () => {
     canManageInventory: 'Manage Inventory',
     canViewAnalytics: 'View Analytics',
     canManageOrders: 'Manage Orders',
-    canAccessConfiguration: 'Access Configuration',
+    canAccessRoleConfiguration: 'Access Role Configuration',
     canViewFinancials: 'View Financials',
   };
 
@@ -44,7 +44,7 @@ const Configuration = () => {
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant='h4' gutterBottom>
-        Configuration
+        Role Configuration
       </Typography>
       <Typography variant='body1' color='text.secondary' sx={{ mb: 3 }}>
         Manage role-based authentication and permissions for admin, staff, and
@@ -256,7 +256,7 @@ const Configuration = () => {
                       const staffHasPermission = ![
                         'canViewAllReports',
                         'canManageUsers',
-                        'canAccessConfiguration',
+                        'canAccessRoleConfiguration',
                         'canViewFinancials',
                       ].includes(key);
 
@@ -311,4 +311,4 @@ const Configuration = () => {
   );
 };
 
-export default Configuration;
+export default RoleConfiguration;

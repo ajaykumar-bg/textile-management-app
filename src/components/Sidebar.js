@@ -14,6 +14,12 @@ import {
   Dashboard as DashboardIcon,
   Settings as SettingsIcon,
   Tune as TuneIcon,
+  Inventory as InventoryIcon,
+  ShoppingCart as SalesIcon,
+  LocalShipping as PurchaseIcon,
+  Factory as ProductionIcon,
+  Palette as DesignIcon,
+  AccountBalance as AccountingIcon,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
@@ -27,13 +33,31 @@ const Sidebar = ({ open, onClose }) => {
     { label: 'Dashboard', path: '/', icon: <DashboardIcon /> },
   ];
 
+  // Add business module navigation items based on role
+  if (user.role === 'admin' || user.role === 'staff') {
+    navigationItems.push(
+      { label: 'Inventory', path: '/inventory', icon: <InventoryIcon /> },
+      { label: 'Sales', path: '/sales', icon: <SalesIcon /> },
+      { label: 'Purchase', path: '/purchase', icon: <PurchaseIcon /> },
+      { label: 'Production', path: '/production', icon: <ProductionIcon /> },
+      { label: 'Design', path: '/design', icon: <DesignIcon /> }
+    );
+  }
+
+  // Add customer-specific navigation
+  if (user.role === 'customer') {
+    navigationItems.push(
+      { label: 'Products', path: '/inventory', icon: <InventoryIcon /> },
+      { label: 'Orders', path: '/sales', icon: <SalesIcon /> }
+    );
+  }
+
   // Add admin-only navigation items
   if (user.role === 'admin') {
-    navigationItems.push({
-      label: 'Configuration',
-      path: '/configuration',
-      icon: <TuneIcon />,
-    });
+    navigationItems.push(
+      { label: 'Accounting', path: '/accounting', icon: <AccountingIcon /> },
+      { label: 'Configuration', path: '/configuration', icon: <TuneIcon /> }
+    );
   }
 
   // Add Settings for all users
@@ -69,6 +93,9 @@ const Sidebar = ({ open, onClose }) => {
         <Box sx={{ p: 2 }}>
           <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
             Navigation
+          </Typography>
+          <Typography variant='body2' color='text.secondary'>
+            {user.role.charAt(0).toUpperCase() + user.role.slice(1)} Portal
           </Typography>
         </Box>
         <Divider />

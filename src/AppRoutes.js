@@ -12,6 +12,12 @@ import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
 import Configuration from './components/Configuration';
 import Settings from './components/Settings';
+import Inventory from './components/Inventory';
+import Sales from './components/Sales';
+import Purchase from './components/Purchase';
+import Production from './components/Production';
+import Design from './components/Design';
+import Accounting from './components/Accounting';
 
 function AppRoutes() {
   return (
@@ -27,6 +33,12 @@ function AppRoutes() {
                 <Container maxWidth={false} sx={{ padding: 2 }}>
                   <Routes>
                     <Route path='/' element={<Dashboard />} />
+                    <Route path='/inventory' element={<Inventory />} />
+                    <Route path='/sales' element={<Sales />} />
+                    <Route path='/purchase' element={<Purchase />} />
+                    <Route path='/production' element={<Production />} />
+                    <Route path='/design' element={<Design />} />
+                    <Route path='/accounting' element={<Accounting />} />
                     <Route path='/configuration' element={<Configuration />} />
                     <Route path='/settings' element={<Settings />} />
                     <Route path='*' element={<Navigate to='/' replace />} />

@@ -99,7 +99,7 @@ const Inventory = () => {
 
   const renderTableView = () => (
     <TableContainer component={Paper} elevation={2}>
-      <Table>
+      <Table size='small'>
         <TableHead>
           <TableRow>
             <TableCell>Item Code</TableCell>
@@ -328,7 +328,7 @@ const Inventory = () => {
               Recent Stock Movements
             </Typography>
             <TableContainer>
-              <Table>
+              <Table size='small'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Movement ID</TableCell>

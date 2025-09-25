@@ -102,7 +102,7 @@ const Production = () => {
               Active Production Orders
             </Typography>
             <TableContainer>
-              <Table>
+              <Table size='small'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Order ID</TableCell>
@@ -185,7 +185,7 @@ const Production = () => {
               Machine Status
             </Typography>
             <TableContainer>
-              <Table>
+              <Table size='small'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Machine ID</TableCell>

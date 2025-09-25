@@ -204,7 +204,7 @@ const Design = () => {
               Pattern Library
             </Typography>
             <TableContainer>
-              <Table>
+              <Table size='small'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Pattern ID</TableCell>

@@ -129,7 +129,7 @@ const Purchase = () => {
               />
             </Box>
             <TableContainer>
-              <Table>
+              <Table size='small'>
                 <TableHead>
                   <TableRow>
                     <TableCell>PO Number</TableCell>
@@ -197,7 +197,7 @@ const Purchase = () => {
               Supplier Directory
             </Typography>
             <TableContainer>
-              <Table>
+              <Table size='small'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Supplier</TableCell>
@@ -269,7 +269,7 @@ const Purchase = () => {
               Purchase Requisitions
             </Typography>
             <TableContainer>
-              <Table>
+              <Table size='small'>
                 <TableHead>
                   <TableRow>
                     <TableCell>PR Number</TableCell>

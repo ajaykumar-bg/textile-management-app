@@ -226,7 +226,7 @@ const Accounting = () => {
               Chart of Accounts
             </Typography>
             <TableContainer>
-              <Table>
+              <Table size='small'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Account ID</TableCell>
@@ -301,7 +301,7 @@ const Accounting = () => {
               Recent Transactions
             </Typography>
             <TableContainer>
-              <Table>
+              <Table size='small'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Transaction ID</TableCell>
@@ -359,7 +359,7 @@ const Accounting = () => {
               Accounts Payable
             </Typography>
             <TableContainer>
-              <Table>
+              <Table size='small'>
                 <TableHead>
                   <TableRow>
                     <TableCell>ID</TableCell>
@@ -420,7 +420,7 @@ const Accounting = () => {
               Accounts Receivable
             </Typography>
             <TableContainer>
-              <Table>
+              <Table size='small'>
                 <TableHead>
                   <TableRow>
                     <TableCell>ID</TableCell>
@@ -486,7 +486,7 @@ const Accounting = () => {
                   Budget vs Actual Performance
                 </Typography>
                 <TableContainer>
-                  <Table>
+                  <Table size='small'>
                     <TableHead>
                       <TableRow>
                         <TableCell>Category</TableCell>

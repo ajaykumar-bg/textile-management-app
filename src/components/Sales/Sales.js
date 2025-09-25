@@ -136,7 +136,7 @@ const Sales = () => {
 
   const renderTableView = () => (
     <TableContainer component={Paper} elevation={2}>
-      <Table>
+      <Table size='small'>
         <TableHead>
           <TableRow>
             <TableCell>Order ID</TableCell>
@@ -392,7 +392,7 @@ const Sales = () => {
               Customer Directory
             </Typography>
             <TableContainer>
-              <Table>
+              <Table size='small'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Customer ID</TableCell>
@@ -478,7 +478,7 @@ const Sales = () => {
               Sales Quotations
             </Typography>
             <TableContainer>
-              <Table>
+              <Table size='small'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Quote ID</TableCell>

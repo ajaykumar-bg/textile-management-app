@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Card,
   CardContent,
   Typography,
-  Box,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  TableSortLabel,
   Paper,
   Chip,
 } from '@mui/material';
@@ -17,6 +17,31 @@ import { permissionLabels, adminOnlyPermissions } from './role.constants';
 import RoleComparisonInfo from './RoleComparisonInfo';
 
 const RoleComparison = () => {
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('permission');
+
+  const handleRequestSort = () => {
+    const isAsc = orderBy === 'permission' && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy('permission');
+  };
+
+  const createSortHandler = () => (event) => {
+    handleRequestSort();
+  };
+
+  const sortedPermissions = useMemo(() => {
+    const permissionKeys = Object.keys(permissionLabels);
+
+    return [...permissionKeys].sort((a, b) => {
+      const aValue = permissionLabels[a].toLowerCase();
+      const bValue = permissionLabels[b].toLowerCase();
+
+      if (aValue < bValue) return order === 'asc' ? -1 : 1;
+      if (aValue > bValue) return order === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }, [order]);
   const getPermissionForRole = (key, role) => {
     switch (role) {
       case 'admin':
@@ -69,7 +94,13 @@ const RoleComparison = () => {
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontWeight: 600, fontSize: '0.875rem' }}>
-                  Permission
+                  <TableSortLabel
+                    active={orderBy === 'permission'}
+                    direction={orderBy === 'permission' ? order : 'asc'}
+                    onClick={createSortHandler()}
+                  >
+                    Permission
+                  </TableSortLabel>
                 </TableCell>
                 <TableCell
                   align='center'
@@ -92,7 +123,7 @@ const RoleComparison = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Object.keys(permissionLabels).map((key) => {
+              {sortedPermissions.map((key) => {
                 const adminPermission = getPermissionForRole(key, 'admin');
                 const staffPermission = getPermissionForRole(key, 'staff');
                 const customerPermission = getPermissionForRole(

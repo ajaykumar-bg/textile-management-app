@@ -5,5 +5,5 @@ export { default as AccountsTable } from './AccountsTable';
 export { default as TransactionsTable } from './TransactionsTable';
 export { default as PayablesTable } from './PayablesTable';
 export { default as ReceivablesTable } from './ReceivablesTable';
-export { default as ReportsTab } from './ReportsTab';
+export { default as ReportsTable } from './ReportsTable';
 export { default as TabPanel } from './TabPanel';

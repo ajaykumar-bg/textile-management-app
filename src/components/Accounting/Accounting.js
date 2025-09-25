@@ -8,7 +8,7 @@ import AccountsTable from './AccountsTable';
 import TransactionsTable from './TransactionsTable';
 import PayablesTable from './PayablesTable';
 import ReceivablesTable from './ReceivablesTable';
-import ReportsTab from './ReportsTab';
+import ReportsTable from './ReportsTable';
 import TabPanel from './TabPanel';
 
 const Accounting = () => {
@@ -102,7 +102,7 @@ const Accounting = () => {
 
       {/* Reports Tab */}
       <TabPanel value={tabValue} index={5}>
-        <ReportsTab
+        <ReportsTable
           accountingData={accountingData}
           formatCurrency={formatCurrency}
         />

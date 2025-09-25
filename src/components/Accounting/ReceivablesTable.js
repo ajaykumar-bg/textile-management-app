@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Card,
   CardContent,
@@ -10,6 +10,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TableSortLabel,
   Chip,
 } from '@mui/material';
 
@@ -19,6 +20,46 @@ const ReceivablesTable = ({
   formatDate,
   paymentStatuses,
 }) => {
+  const [orderBy, setOrderBy] = useState('dueDate');
+  const [order, setOrder] = useState('asc');
+
+  const handleRequestSort = (property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const createSortHandler = (property) => (event) => {
+    handleRequestSort(property);
+  };
+
+  const sortedReceivables = useMemo(() => {
+    if (!accountingData?.receivables) return [];
+
+    return [...accountingData.receivables].sort((a, b) => {
+      let aValue = a[orderBy];
+      let bValue = b[orderBy];
+
+      // Handle special cases
+      if (orderBy === 'amount') {
+        aValue = Number(aValue);
+        bValue = Number(bValue);
+      } else if (orderBy === 'dueDate') {
+        aValue = new Date(aValue);
+        bValue = new Date(bValue);
+      } else if (orderBy === 'daysOverdue') {
+        aValue = a.status === 'Overdue' ? a.daysOverdue : 0;
+        bValue = b.status === 'Overdue' ? b.daysOverdue : 0;
+      } else if (typeof aValue === 'string') {
+        aValue = aValue.toLowerCase();
+        bValue = bValue.toLowerCase();
+      }
+
+      if (aValue < bValue) return order === 'asc' ? -1 : 1;
+      if (aValue > bValue) return order === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }, [accountingData?.receivables, orderBy, order]);
   return (
     <Card elevation={2}>
       <CardContent>
@@ -29,18 +70,74 @@ const ReceivablesTable = ({
           <Table size='small'>
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Customer</TableCell>
-                <TableCell>Invoice Number</TableCell>
-                <TableCell align='right'>Amount</TableCell>
-                <TableCell>Due Date</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Days Overdue</TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'id'}
+                    direction={orderBy === 'id' ? order : 'asc'}
+                    onClick={createSortHandler('id')}
+                  >
+                    ID
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'customer'}
+                    direction={orderBy === 'customer' ? order : 'asc'}
+                    onClick={createSortHandler('customer')}
+                  >
+                    Customer
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'invoiceNumber'}
+                    direction={orderBy === 'invoiceNumber' ? order : 'asc'}
+                    onClick={createSortHandler('invoiceNumber')}
+                  >
+                    Invoice Number
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell align='right'>
+                  <TableSortLabel
+                    active={orderBy === 'amount'}
+                    direction={orderBy === 'amount' ? order : 'asc'}
+                    onClick={createSortHandler('amount')}
+                  >
+                    Amount
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'dueDate'}
+                    direction={orderBy === 'dueDate' ? order : 'asc'}
+                    onClick={createSortHandler('dueDate')}
+                  >
+                    Due Date
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'status'}
+                    direction={orderBy === 'status' ? order : 'asc'}
+                    onClick={createSortHandler('status')}
+                  >
+                    Status
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'daysOverdue'}
+                    direction={orderBy === 'daysOverdue' ? order : 'asc'}
+                    onClick={createSortHandler('daysOverdue')}
+                  >
+                    Days Overdue
+                  </TableSortLabel>
+                </TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {accountingData.receivables.map((receivable) => (
+              {sortedReceivables.map((receivable) => (
                 <TableRow key={receivable.id} hover>
                   <TableCell>{receivable.id}</TableCell>
                   <TableCell>

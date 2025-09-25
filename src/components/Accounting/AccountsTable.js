@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Card,
   CardContent,
@@ -9,10 +9,51 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TableSortLabel,
   Chip,
 } from '@mui/material';
 
 const AccountsTable = ({ accountingData, formatCurrency, formatDate }) => {
+  const [orderBy, setOrderBy] = useState('id');
+  const [order, setOrder] = useState('asc');
+
+  const handleRequestSort = (property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const createSortHandler = (property) => (event) => {
+    handleRequestSort(property);
+  };
+
+  const sortedAccounts = useMemo(() => {
+    if (!accountingData?.accounts) return [];
+
+    return [...accountingData.accounts].sort((a, b) => {
+      let aValue = a[orderBy];
+      let bValue = b[orderBy];
+
+      // Handle special cases
+      if (orderBy === 'balance') {
+        aValue = Number(aValue);
+        bValue = Number(bValue);
+      } else if (orderBy === 'lastTransaction') {
+        aValue = new Date(aValue);
+        bValue = new Date(bValue);
+      } else if (orderBy === 'isActive') {
+        aValue = a.isActive ? 'Active' : 'Inactive';
+        bValue = b.isActive ? 'Active' : 'Inactive';
+      } else if (typeof aValue === 'string') {
+        aValue = aValue.toLowerCase();
+        bValue = bValue.toLowerCase();
+      }
+
+      if (aValue < bValue) return order === 'asc' ? -1 : 1;
+      if (aValue > bValue) return order === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }, [accountingData?.accounts, orderBy, order]);
   return (
     <Card elevation={2}>
       <CardContent>
@@ -23,17 +64,73 @@ const AccountsTable = ({ accountingData, formatCurrency, formatDate }) => {
           <Table size='small'>
             <TableHead>
               <TableRow>
-                <TableCell>Account ID</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Type</TableCell>
-                <TableCell>Category</TableCell>
-                <TableCell align='right'>Balance</TableCell>
-                <TableCell>Last Transaction</TableCell>
-                <TableCell>Status</TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'id'}
+                    direction={orderBy === 'id' ? order : 'asc'}
+                    onClick={createSortHandler('id')}
+                  >
+                    Account ID
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'name'}
+                    direction={orderBy === 'name' ? order : 'asc'}
+                    onClick={createSortHandler('name')}
+                  >
+                    Name
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'type'}
+                    direction={orderBy === 'type' ? order : 'asc'}
+                    onClick={createSortHandler('type')}
+                  >
+                    Type
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'category'}
+                    direction={orderBy === 'category' ? order : 'asc'}
+                    onClick={createSortHandler('category')}
+                  >
+                    Category
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell align='right'>
+                  <TableSortLabel
+                    active={orderBy === 'balance'}
+                    direction={orderBy === 'balance' ? order : 'asc'}
+                    onClick={createSortHandler('balance')}
+                  >
+                    Balance
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'lastTransaction'}
+                    direction={orderBy === 'lastTransaction' ? order : 'asc'}
+                    onClick={createSortHandler('lastTransaction')}
+                  >
+                    Last Transaction
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'isActive'}
+                    direction={orderBy === 'isActive' ? order : 'asc'}
+                    onClick={createSortHandler('isActive')}
+                  >
+                    Status
+                  </TableSortLabel>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {accountingData.accounts.map((account) => (
+              {sortedAccounts.map((account) => (
                 <TableRow key={account.id} hover>
                   <TableCell>{account.id}</TableCell>
                   <TableCell>

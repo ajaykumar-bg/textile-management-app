@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Typography,
   Card,
@@ -10,10 +10,58 @@ import {
   TableHead,
   TableRow,
   Chip,
+  TableSortLabel,
 } from '@mui/material';
 import { salesData } from './constants';
 
 const CustomersTable = ({ formatCurrency, formatDate }) => {
+  const [orderBy, setOrderBy] = useState('id');
+  const [order, setOrder] = useState('asc');
+
+  const handleRequestSort = (property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const sortedCustomers = useMemo(() => {
+    return [...salesData.customers].sort((a, b) => {
+      let aValue = a[orderBy];
+      let bValue = b[orderBy];
+
+      // Handle numeric values
+      if (
+        orderBy === 'creditLimit' ||
+        orderBy === 'currentBalance' ||
+        orderBy === 'lifetimeValue'
+      ) {
+        aValue = Number(aValue) || 0;
+        bValue = Number(bValue) || 0;
+      }
+
+      // Handle date values
+      if (orderBy === 'lastOrderDate') {
+        aValue = new Date(aValue);
+        bValue = new Date(bValue);
+      }
+
+      // Handle string values
+      if (typeof aValue === 'string' && orderBy !== 'lastOrderDate') {
+        aValue = aValue.toLowerCase();
+        bValue = bValue.toLowerCase();
+      }
+
+      if (order === 'asc') {
+        return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+      } else {
+        return aValue > bValue ? -1 : aValue < bValue ? 1 : 0;
+      }
+    });
+  }, [orderBy, order]);
+
+  const createSortHandler = (property) => () => {
+    handleRequestSort(property);
+  };
   return (
     <Card elevation={2}>
       <CardContent>
@@ -24,18 +72,82 @@ const CustomersTable = ({ formatCurrency, formatDate }) => {
           <Table size='small'>
             <TableHead>
               <TableRow>
-                <TableCell>Customer ID</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Type</TableCell>
-                <TableCell>Contact</TableCell>
-                <TableCell>Credit Limit</TableCell>
-                <TableCell>Current Balance</TableCell>
-                <TableCell>Lifetime Value</TableCell>
-                <TableCell>Last Order</TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'id'}
+                    direction={orderBy === 'id' ? order : 'asc'}
+                    onClick={createSortHandler('id')}
+                  >
+                    Customer ID
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'name'}
+                    direction={orderBy === 'name' ? order : 'asc'}
+                    onClick={createSortHandler('name')}
+                  >
+                    Name
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'type'}
+                    direction={orderBy === 'type' ? order : 'asc'}
+                    onClick={createSortHandler('type')}
+                  >
+                    Type
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'contact'}
+                    direction={orderBy === 'contact' ? order : 'asc'}
+                    onClick={createSortHandler('contact')}
+                  >
+                    Contact
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'creditLimit'}
+                    direction={orderBy === 'creditLimit' ? order : 'asc'}
+                    onClick={createSortHandler('creditLimit')}
+                  >
+                    Credit Limit
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'currentBalance'}
+                    direction={orderBy === 'currentBalance' ? order : 'asc'}
+                    onClick={createSortHandler('currentBalance')}
+                  >
+                    Current Balance
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'lifetimeValue'}
+                    direction={orderBy === 'lifetimeValue' ? order : 'asc'}
+                    onClick={createSortHandler('lifetimeValue')}
+                  >
+                    Lifetime Value
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'lastOrderDate'}
+                    direction={orderBy === 'lastOrderDate' ? order : 'asc'}
+                    onClick={createSortHandler('lastOrderDate')}
+                  >
+                    Last Order
+                  </TableSortLabel>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {salesData.customers.map((customer) => (
+              {sortedCustomers.map((customer) => (
                 <TableRow key={customer.id} hover>
                   <TableCell>
                     <Typography variant='body2' fontWeight='medium'>

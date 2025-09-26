@@ -1,5 +1,5 @@
-import React from 'react';
-import { Container } from '@mui/material';
+import React, { Suspense } from 'react';
+import { Container, CircularProgress, Box } from '@mui/material';
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,15 +9,31 @@ import {
 
 import Login from './components/Login';
 import Navbar from './components/Navbar';
-import Dashboard from './features/Dashboard';
-import RoleConfiguration from './features/RoleConfiguration';
-import Settings from './features/Settings';
-import Inventory from './features/Inventory';
-import Sales from './features/Sales';
-import Purchase from './features/Purchase';
-import Production from './features/Production';
-import Design from './features/Design';
-import Accounting from './features/Accounting';
+
+// Lazy load feature components
+const Dashboard = React.lazy(() => import('./features/Dashboard'));
+const RoleConfiguration = React.lazy(() =>
+  import('./features/RoleConfiguration')
+);
+const Settings = React.lazy(() => import('./features/Settings'));
+const Inventory = React.lazy(() => import('./features/Inventory'));
+const Sales = React.lazy(() => import('./features/Sales'));
+const Purchase = React.lazy(() => import('./features/Purchase'));
+const Production = React.lazy(() => import('./features/Production'));
+const Design = React.lazy(() => import('./features/Design'));
+const Accounting = React.lazy(() => import('./features/Accounting'));
+
+// Loading fallback component
+const LoadingFallback = () => (
+  <Box
+    display='flex'
+    justifyContent='center'
+    alignItems='center'
+    minHeight='60vh'
+  >
+    <CircularProgress size={40} />
+  </Box>
+);
 
 function AppRoutes() {
   return (
@@ -31,21 +47,23 @@ function AppRoutes() {
               <>
                 <Navbar />
                 <Container maxWidth={false} sx={{ padding: 2 }}>
-                  <Routes>
-                    <Route path='/' element={<Dashboard />} />
-                    <Route path='/inventory' element={<Inventory />} />
-                    <Route path='/sales' element={<Sales />} />
-                    <Route path='/purchase' element={<Purchase />} />
-                    <Route path='/production' element={<Production />} />
-                    <Route path='/design' element={<Design />} />
-                    <Route path='/accounting' element={<Accounting />} />
-                    <Route
-                      path='/role-configuration'
-                      element={<RoleConfiguration />}
-                    />
-                    <Route path='/settings' element={<Settings />} />
-                    <Route path='*' element={<Navigate to='/' replace />} />
-                  </Routes>
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Routes>
+                      <Route path='/' element={<Dashboard />} />
+                      <Route path='/inventory' element={<Inventory />} />
+                      <Route path='/sales' element={<Sales />} />
+                      <Route path='/purchase' element={<Purchase />} />
+                      <Route path='/production' element={<Production />} />
+                      <Route path='/design' element={<Design />} />
+                      <Route path='/accounting' element={<Accounting />} />
+                      <Route
+                        path='/role-configuration'
+                        element={<RoleConfiguration />}
+                      />
+                      <Route path='/settings' element={<Settings />} />
+                      <Route path='*' element={<Navigate to='/' replace />} />
+                    </Routes>
+                  </Suspense>
                 </Container>
               </>
             }
